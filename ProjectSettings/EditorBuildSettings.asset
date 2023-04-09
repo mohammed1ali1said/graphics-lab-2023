@@ -9,9 +9,18 @@ EditorBuildSettings:
     path: Assets/OutdoorsScene.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
   - enabled: 1
-    path: Assets/myscene1.unity
+    path: Assets/normal.unity
     guid: 58701cc907a7b514992cf3e073e88f21
   - enabled: 1
     path: Assets/mainwindow.unity
     guid: e7b226077e853eb479916e00de9ef35e
+  - enabled: 1
+    path: Assets/easy.unity
+    guid: 48bed37517966834085a73bdf6bca8ed
+  - enabled: 1
+    path: Assets/hard.unity
+    guid: c53c3314be3491044b92176834fc9213
+  - enabled: 1
+    path: Assets/stats scene.unity
+    guid: 863a2a9211565464e8b1d082173a56e9
   m_configObjects: {}

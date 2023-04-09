@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+
 public class gunbehaviour : MonoBehaviour
 {
     public ParticleSystem ps;
@@ -10,7 +11,7 @@ public class gunbehaviour : MonoBehaviour
     public Camera fpscam;
     public static float shots = 0;
     private TextMeshProUGUI shotstext;
-    private TextMeshProUGUI shootingAccuracy;
+    public TextMeshProUGUI shootingAccuracy;
     public TextMeshProUGUI Reloading;
     public TextMeshProUGUI bullets;
     public int magsize=0;
@@ -18,6 +19,7 @@ public class gunbehaviour : MonoBehaviour
     public float reloadingtime=0;
     public static bool reloadflag;
     private bool stopshootingflag;
+    public static int shotsfiredforresults;
 
 
     
@@ -92,8 +94,8 @@ public class gunbehaviour : MonoBehaviour
         shotstext.text = "shots: " + shots;
         string formattedNum = ((Target.respawnCounter) / (shots) * 100).ToString("F2");
         shootingAccuracy.text = "Accuracy:%  " + formattedNum;
-       
-        Debug.Log(shotsfired);
+
+        shotsfiredforresults = shotsfired;
 
     }
     async Task reloadAsync()
@@ -106,5 +108,6 @@ public class gunbehaviour : MonoBehaviour
         stopshootingflag = false;
         shotsfired = 0;
     }
+
 
 }

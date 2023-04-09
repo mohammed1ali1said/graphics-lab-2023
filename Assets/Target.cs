@@ -19,6 +19,7 @@ public class Target : MonoBehaviour
     private Vector3 originalPosition;
     private bool isDead = false;
     public static float  respawnCounter = 0;
+    public static float avgTimeForResults;
 
     void Start()
     {
@@ -110,7 +111,8 @@ public class Target : MonoBehaviour
         target.respawnCounterText = respawnCounterText;
 
         // Set the material of the new target to match the current target
-        timeText.text = "AVG time " + ((deathTime - spawnTime) / respawnCounter).ToString("F2");
+        avgTimeForResults = ((deathTime - spawnTime) / respawnCounter);
+        timeText.text = "AVG time " + avgTimeForResults.ToString("F2");
         targetObject.GetComponent<Renderer>().material = renderer.material;
         spawnTime = Time.time;
     }
