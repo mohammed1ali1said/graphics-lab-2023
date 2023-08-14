@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using System.Linq;
+using System;
 
 public class Target : MonoBehaviour
 {
@@ -18,8 +20,11 @@ public class Target : MonoBehaviour
     private bool movingRight = true;
     private Vector3 originalPosition;
     private bool isDead = false;
-    public static float  respawnCounter = 0;
+    public static int  respawnCounter = 0;
     public static float avgTimeForResults;
+    public static float[] time_stats= new float[100];
+    public static float[] acc_stats = new float[100];
+
 
     void Start()
     {
@@ -29,7 +34,7 @@ public class Target : MonoBehaviour
 
     void Update()
     {
-        respawnCounterText.text = "hits: " + respawnCounter;
+        respawnCounterText.text = "hits: " + gunbehaviour.hits;
         if (isDead)
         {
             return;
@@ -50,14 +55,17 @@ public class Target : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        Target.respawnCounter++;
-               respawnCounterText.text = "hits: " + respawnCounter;
-       
+  
+               respawnCounterText.text = "hits: " + gunbehaviour.hits;
+        Debug.Log(health);
         health -= amount;
         if (health <= 0f)
         {
+            
             Die();
+            Target.respawnCounter++;
         }
+        
     }
 
     public void Die()
@@ -70,9 +78,9 @@ public class Target : MonoBehaviour
 
         isDead = true;
 
-        
 
 
+        float x = gameObject.transform.position.x;
         // Destroy the current object after a delay
         Destroy(gameObject, spawnDelay);
 
@@ -94,9 +102,10 @@ public class Target : MonoBehaviour
         targetObject.transform.rotation = transform.rotation;
 
         // Generate a random position within the plane's bounds
-        float x = Random.Range(plane.transform.position.x - plane.transform.localScale.x / 2, plane.transform.position.x + plane.transform.localScale.x / 2);
-        float y = Random.Range(minY, maxY);
-        float z = Random.Range(plane.transform.position.z - plane.transform.localScale.z / 2, plane.transform.position.z + plane.transform.localScale.z);
+        //float x = Random.Range(plane.transform.position.x - plane.transform.localScale.x / 2, plane.transform.position.x + plane.transform.localScale.x / 2);
+        float y = UnityEngine.Random.Range(minY, maxY);
+
+        float z = UnityEngine.Random.Range(plane.transform.position.z - plane.transform.localScale.z / 2, plane.transform.position.z + plane.transform.localScale.z);
 
         // Set the position of the new target to the random position within the plane's bounds
         targetObject.transform.position = new Vector3(x, y, z);
@@ -111,9 +120,19 @@ public class Target : MonoBehaviour
         target.respawnCounterText = respawnCounterText;
 
         // Set the material of the new target to match the current target
-        avgTimeForResults = ((deathTime - spawnTime) / respawnCounter);
+        float deathtimer = (deathTime - spawnTime);
+        //this array saves each time we kill a target usefull for stats later   
+        avgTimeForResults = (deathtimer / (respawnCounter));
+        Debug.Log(deathtimer);
+
+        time_stats[respawnCounter] = deathtimer;
+        
+       
+        acc_stats[respawnCounter] = ((respawnCounter / gunbehaviour.shots) * 100);
+
+        Debug.Log(time_stats[respawnCounter]);
         timeText.text = "AVG time " + avgTimeForResults.ToString("F2");
         targetObject.GetComponent<Renderer>().material = renderer.material;
-        spawnTime = Time.time;
+        spawnTime = deathTime;
     }
 }

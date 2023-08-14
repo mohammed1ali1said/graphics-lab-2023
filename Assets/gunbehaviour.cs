@@ -20,6 +20,7 @@ public class gunbehaviour : MonoBehaviour
     public static bool reloadflag;
     private bool stopshootingflag;
     public static int shotsfiredforresults;
+    public static int hits=0;
 
 
     
@@ -89,10 +90,11 @@ public class gunbehaviour : MonoBehaviour
             if(tar!=null)
             {
                tar.TakeDamage(damage);
+                hits++;
             }
         }
         shotstext.text = "shots: " + shots;
-        string formattedNum = ((Target.respawnCounter) / (shots) * 100).ToString("F2");
+        string formattedNum = (hits/ (shots) * 100).ToString("F2");
         shootingAccuracy.text = "Accuracy:%  " + formattedNum;
 
         shotsfiredforresults = shotsfired;

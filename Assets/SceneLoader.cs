@@ -31,7 +31,7 @@ public class SceneLoader : MonoBehaviour
             }
             else
             {
-                results.text = "good aim and time is something worth admiring but if you are not playing on hard mode there is still room for improvment";
+                results.text = "good aim and time is something worth admiring but if you are not playing on superhard mode there is still room for improvment";
             }
 
         }
